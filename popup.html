@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    body {
+      width: 320px;
+      padding: 20px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .value-badge {
+      background: #e0e7ff;
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      transition: transform 0.1s;
+      box-shadow: 0 2px 4px rgba(99, 102, 241, 0.4);
+    }
+
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 8px -1px rgba(99, 102, 241, 0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      min-height: 1.2em;
+      font-weight: 500;
+    }
+
+    .lang-select {
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      background-color: var(--card-bg);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .lang-select:hover {
+      border-color: var(--primary);
+    }
+
+    .lang-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+    .slider-container {
+      position: relative;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 25px; /* Space for labels */
+    }
+
+    .ticks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .tick {
+      position: absolute;
+      width: 2px;
+      height: 12px;
+      background: var(--primary);
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 1px;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .tick-label {
+      position: absolute;
+      top: 18px;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Adjust slider to be on top */
+    input[type=range] {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h2 id="appName">Volume & Speed</h2>
+    <select id="langSelect" class="lang-select">
+      <option value="en">English</option>
+      <option value="pt">Português</option>
+      <option value="es">Español</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <div class="control-group">
+      <label>
+        <span id="volumeLabel">Volume</span>
+        <span id="volumeValue" class="value-badge">1.0x</span>
+      </label>
+      <div class="slider-container">
+        <div class="ticks">
+          <!-- Range: 1 to 5 -->
+          <div class="tick" style="left: 9px"></div>
+          <div class="tick-label" style="left: 9px">1</div>
+
+          <div class="tick" style="left: calc(25% + 5px)"></div>
+          <div class="tick-label" style="left: calc(25% + 5px)">2</div>
+
+          <div class="tick" style="left: 50%"></div>
+          <div class="tick-label" style="left: 50%">3</div>
+
+          <div class="tick" style="left: calc(75% - 5px)"></div>
+          <div class="tick-label" style="left: calc(75% - 5px)">4</div>
+
+          <div class="tick" style="left: calc(100% - 9px)"></div>
+          <div class="tick-label" style="left: calc(100% - 9px)">5</div>
+        </div>
+        <input type="range" id="volumeSlider" min="1" max="5" step="0.1" value="1">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>
+        <span id="speedLabel">Speed</span>
+        <span id="speedValue" class="value-badge">1.0x</span>
+      </label>
+      <div class="slider-container">
+        <div class="ticks">
+          <!-- Range: 0.25 to 4 -->
+          <div class="tick" style="left: 9px"></div>
+          <div class="tick-label" style="left: 9px">0.25</div>
+
+          <div class="tick" style="left: calc(20% + 5px)"></div>
+          <div class="tick-label" style="left: calc(20% + 5px)">1.0</div>
+          
+          <div class="tick" style="left: calc(33.33% + 3px)"></div>
+          <div class="tick-label" style="left: calc(33.33% + 3px)">1.5</div>
+
+          <div class="tick" style="left: calc(46.67%)"></div>
+          <div class="tick-label" style="left: 46.67%">2.0</div>
+
+          <div class="tick" style="left: calc(60% - 2px)"></div>
+          <div class="tick-label" style="left: calc(60% - 2px)">2.5</div>
+          
+          <div class="tick" style="left: calc(73.33% - 4px)"></div>
+          <div class="tick-label" style="left: calc(73.33% - 4px)">3.0</div>
+
+          <div class="tick" style="left: calc(86.67% - 7px)"></div>
+          <div class="tick-label" style="left: calc(86.67% - 7px)">3.5</div>
+
+          <div class="tick" style="left: calc(100% - 9px)"></div>
+          <div class="tick-label" style="left: calc(100% - 9px)">4.0</div>
+        </div>
+        <input type="range" id="speedSlider" min="0.25" max="4" step="0.25" value="1">
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
