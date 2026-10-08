@@ -1,0 +1,34 @@
+{
+  "appName": {
+    "message": "Loudillys - Amplificador de Volumen y Velocidad"
+  },
+  "appDesc": {
+    "message": "Aumenta el volumen hasta 5x y controla la velocidad de reproducción de videos."
+  },
+  "volumeLabel": {
+    "message": "Volumen"
+  },
+  "speedLabel": {
+    "message": "Velocidad"
+  },
+  "applyBtn": {
+    "message": "Aplicar Configuración"
+  },
+  "statusNoTab": {
+    "message": "No se encontró ninguna pestaña activa."
+  },
+  "statusNoVideo": {
+    "message": "No se encontró ningún video."
+  },
+  "statusApplied": {
+    "message": "¡Configuración Aplicada!"
+  },
+  "statusError": {
+    "message": "Error: $DETAILS$",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  }
+}
